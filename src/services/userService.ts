@@ -1,4 +1,9 @@
-let dataStore = [
+const dataStore: {
+  id: number;
+  name: string;
+  email: string;
+  dateOfBirth: string | Date;
+}[] = [
   {
     id: 1,
     name: "FirstLander",
@@ -17,4 +22,29 @@ const getAllUsers = () => {
   return dataStore;
 };
 
-export default { getAllUsers };
+const createUser = (body: {
+  name: string;
+  email: string;
+  dateOfBirth: string | null;
+}) => {
+  const { name, email, dateOfBirth } = body;
+
+  if (name && email) {
+    const id = dataStore[dataStore.length - 1].id + 1;
+    const _dateOfBirth = dateOfBirth ? dateOfBirth : new Date();
+
+    const newUser = {
+      id,
+      name,
+      email,
+      dateOfBirth: _dateOfBirth,
+    };
+    dataStore.push(newUser);
+
+    return newUser;
+  } else {
+    return null;
+  }
+};
+
+export default { getAllUsers, createUser };
