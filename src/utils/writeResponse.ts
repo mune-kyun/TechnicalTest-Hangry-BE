@@ -8,7 +8,7 @@ const writeResponse = (
   body: any
 ) => {
   res.writeHead(statusCode, { "Content-Type": "application/json" });
-  res.end(JSON.stringify(body));
+  body ? res.end(JSON.stringify(body)) : res.end();
   return res;
 };
 

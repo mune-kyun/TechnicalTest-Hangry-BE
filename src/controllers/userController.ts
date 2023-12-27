@@ -39,6 +39,16 @@ const userController = (
         writeResponse(res, 400, { error: "Bad Parameter" });
       }
     });
+  } else if (method === "DELETE") {
+    const userId = getRouteParam(req);
+
+    const user = userService.deleteUser(userId);
+
+    if (user) {
+      writeResponse(res, 204, null);
+    } else {
+      writeResponse(res, 400, { error: "Bad Parameter" });
+    }
   } else {
     writeResponse(res, 404, { error: "Endpoint not found" });
   }

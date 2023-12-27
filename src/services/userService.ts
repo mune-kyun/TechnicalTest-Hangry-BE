@@ -73,4 +73,13 @@ const updateUser = (
   return newData;
 };
 
-export default { getAllUsers, createUser, updateUser };
+const deleteUser = (id: number) => {
+  const user = dataStore.find((obj) => obj.id === id);
+  if (!user) return null;
+
+  dataStore = dataStore.filter((obj: UserType) => obj.id !== id);
+
+  return user;
+};
+
+export default { getAllUsers, createUser, updateUser, deleteUser };
