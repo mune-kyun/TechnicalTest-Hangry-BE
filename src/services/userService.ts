@@ -1,9 +1,11 @@
-const dataStore: {
+interface UserType {
   id: number;
   name: string;
   email: string;
   dateOfBirth: string | Date;
-}[] = [
+}
+
+let dataStore: UserType[] = [
   {
     id: 1,
     name: "FirstLander",
@@ -47,4 +49,28 @@ const createUser = (body: {
   }
 };
 
-export default { getAllUsers, createUser };
+const updateUser = (
+  id: number,
+  body: {
+    name: string | null;
+    email: string | null;
+    dateOfBirth: string | null;
+  }
+) => {
+  const { name, email, dateOfBirth } = body;
+  if (!name && !email && !dateOfBirth) return null;
+
+  const user = dataStore.find((obj) => obj.id === id);
+  if (!user) return null;
+
+  let newData = { ...user };
+  if (name) newData = { ...newData, name };
+  if (email) newData = { ...newData, email };
+  if (dateOfBirth) newData = { ...newData, dateOfBirth };
+
+  dataStore = dataStore.map((obj: UserType) => (obj.id === id ? newData : obj));
+
+  return newData;
+};
+
+export default { getAllUsers, createUser, updateUser };

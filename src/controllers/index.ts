@@ -4,6 +4,8 @@ import url from "url";
 import writeResponse from "../utils/writeResponse";
 import userController from "./userController";
 
+const authPattern: RegExp = /^\/user(?:\/[^\/]*)?$/;
+
 const controller = (
   req: http.IncomingMessage,
   res: http.ServerResponse<http.IncomingMessage> & {
@@ -15,7 +17,7 @@ const controller = (
 
   if (pathname === "/") {
     writeResponse(res, 200, { message: "Welcome" });
-  } else if (pathname === "/user") {
+  } else if (authPattern.test(pathname)) {
     userController(req, res);
   } else {
     writeResponse(res, 404, { error: "Endpoint not found" });

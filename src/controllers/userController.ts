@@ -3,6 +3,7 @@ import http from "http";
 import userService from "../services/userService";
 import writeResponse from "../utils/writeResponse";
 import handleBody from "../utils/handleBody";
+import getRouteParam from "../utils/getRouteParam";
 
 const userController = (
   req: http.IncomingMessage,
@@ -19,6 +20,18 @@ const userController = (
   } else if (method === "POST") {
     handleBody(req, (body) => {
       const user = userService.createUser(body);
+
+      if (user) {
+        writeResponse(res, 201, { data: user });
+      } else {
+        writeResponse(res, 400, { error: "Bad Parameter" });
+      }
+    });
+  } else if (method === "PUT") {
+    handleBody(req, (body) => {
+      const userId = getRouteParam(req);
+
+      const user = userService.updateUser(userId, body);
 
       if (user) {
         writeResponse(res, 201, { data: user });
