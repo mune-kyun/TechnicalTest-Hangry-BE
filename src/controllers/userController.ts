@@ -14,9 +14,21 @@ const userController = (
   const { method } = req;
 
   if (method === "GET") {
-    const users = userService.getAllUsers();
+    const userId = getRouteParam(req);
 
-    writeResponse(res, 200, users);
+    if (!userId) {
+      const users = userService.getAllUsers();
+
+      writeResponse(res, 200, users);
+    } else {
+      const user = userService.getUserById(userId);
+
+      if (user) {
+        writeResponse(res, 201, { data: user });
+      } else {
+        writeResponse(res, 404, { error: "User Not Found" });
+      }
+    }
   } else if (method === "POST") {
     handleBody(req, (body) => {
       const user = userService.createUser(body);

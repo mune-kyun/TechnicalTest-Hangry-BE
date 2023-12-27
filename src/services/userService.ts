@@ -24,6 +24,12 @@ const getAllUsers = () => {
   return dataStore;
 };
 
+const getUserById = (id: number) => {
+  const user = dataStore.filter((obj: UserType) => obj.id === id);
+
+  return user[0];
+};
+
 const createUser = (body: {
   name: string;
   email: string;
@@ -82,4 +88,4 @@ const deleteUser = (id: number) => {
   return user;
 };
 
-export default { getAllUsers, createUser, updateUser, deleteUser };
+export default { getAllUsers, getUserById, createUser, updateUser, deleteUser };
