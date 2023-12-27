@@ -7,6 +7,10 @@
 - If you want to run in development mode use `npm run dev`.
 - Else, run `npm run build` then `npm run prod`.
 
+## How to Run In Docker Container
+
+In case it's preferable to run it in using Docker, the Dockerfile and docker-compose is available. Simply `docker compose` as you wish.
+
 ## Endpoints
 
 ### <span style="color: green;">GET</span> /user
